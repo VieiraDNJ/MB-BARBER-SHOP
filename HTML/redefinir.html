@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Senha - MB Barber Shop</title>
+    <link rel="stylesheet" href="../CSS/login.css"> 
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-box login"> 
+            <h2>Criar Nova Senha</h2>
+            <form id="reset-form">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" id="new-password" required placeholder=" ">
+                    <label>Nova Senha</label>
+                </div>
+
+                <div class="password-requirements" id="pwd-requirements" style="margin-bottom: 20px;">
+                    <p id="req-length" class="invalid">✖ Mínimo 8 caracteres</p>
+                    <p id="req-upper" class="invalid">✖ Uma letra maiúscula</p>
+                    <p id="req-lower" class="invalid">✖ Uma letra minúscula</p>
+                    <p id="req-number" class="invalid">✖ Um número</p>
+                    <p id="req-special" class="invalid">✖ Um símbolo especial (@, #, $, etc.)</p>
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn-login" disabled style="opacity: 0.5; cursor: not-allowed; width: 100%;">
+                    Atualizar Senha
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+    <script>
+        // 🚀 URL BASE DA API - Altere apenas aqui se o IP do servidor mudar!
+        const API_BASE_URL = 'http://localhost:3000';
+
+        const resetForm = document.getElementById('reset-form');
+        const newPasswordInput = document.getElementById('new-password');
+        const btnSubmit = document.getElementById('btn-submit');
+
+        // Mapeamento dos requisitos visuais
+        const reqElements = {
+            length: document.getElementById('req-length'),
+            upper: document.getElementById('req-upper'),
+            lower: document.getElementById('req-lower'),
+            number: document.getElementById('req-number'),
+            special: document.getElementById('req-special')
+        };
+
+        // Validação em tempo real
+        newPasswordInput.addEventListener('input', () => {
+            const val = newPasswordInput.value;
+            
+            const validations = {
+                length: val.length >= 8,
+                upper: /[A-Z]/.test(val),
+                lower: /[a-z]/.test(val),
+                number: /[0-9]/.test(val),
+                special: /[\W_]/.test(val)
+            };
+
+            // Atualiza as cores e ícones conforme o usuário digita
+            Object.keys(validations).forEach(key => {
+                const element = reqElements[key];
+                const isValid = validations[key];
+                
+                if (isValid) {
+                    element.classList.remove('invalid');
+                    element.classList.add('valid');
+                    element.textContent = element.textContent.replace('✖', '✔');
+                } else {
+                    element.classList.remove('valid');
+                    element.classList.add('invalid');
+                    element.textContent = element.textContent.replace('✔', '✖');
+                }
+            });
+
+            // Só habilita o botão se todos os pontos estiverem verdes
+            const isAllValid = Object.values(validations).every(v => v === true);
+            btnSubmit.disabled = !isAllValid;
+            btnSubmit.style.opacity = isAllValid ? "1" : "0.5";
+            btnSubmit.style.cursor = isAllValid ? "pointer" : "not-allowed";
+        });
+
+        // Envio do formulário
+        resetForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const novaSenha = newPasswordInput.value;
+
+            try {
+                // 🔗 Requisição dinâmica utilizando a URL configurada no topo do script
+                const response = await fetch(`${API_BASE_URL}/update-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, novaSenha })
+                });
+
+                if (response.ok) {
+                    alert("Senha alterada com sucesso! Agora você já pode fazer login.");
+                    window.location.href = "login.html";
+                } else {
+                    const data = await response.json();
+                    alert("Erro: " + (data.message || "O link expirou ou é inválido."));
+                }
+            } catch (error) {
+                alert("Erro ao conectar com o servidor. Certifique-se de que o backend Node.js está rodando.");
+            }
+        });
+    </script>
+</body>
+</html>

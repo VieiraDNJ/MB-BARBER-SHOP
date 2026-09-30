@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | MB Barber Shop</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../CSS/auth.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background-color: #1c1c1e;
+            color: white;
+        }
+
+        .navbar {
+            background-color: #3b3a3d;
+            border-bottom: 2px solid #f17a12;
+        }
+
+        .card-dashboard {
+            background-color: #2c2c2e;
+            border: 1px solid #444;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f17a12;
+        }
+
+        .table-dark {
+            --bs-table-bg: #2c2c2e;
+        }
+
+        .filter-section {
+            background: #3b3a3d;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        #containerGrafico {
+            height: 250px;
+            position: relative;
+        }
+
+        .btn-delete {
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .btn-delete:hover {
+            color: #ff4d5e;
+            transform: scale(1.1);
+        }
+
+        .log-item {
+            border-left: 3px solid #f17a12;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark p-3">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <span class="navbar-brand mb-0 h1">
+                Dashboard Administrativo
+            </span>
+
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle"
+                        type="button"
+                        id="menuAdmin"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> Menu
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuAdmin">
+
+                    <li>
+                        <h6 class="dropdown-header">
+                            Gerenciamento
+                        </h6>
+                    </li>
+
+                    <li id="menu-item-bloqueio">
+                        <a class="dropdown-item" href="admin_agenda.html">
+                            <i class="bi bi-calendar-x"></i>
+                            Bloquear Horários
+                        </a>
+                    </li>
+                    <li id="menu-item-servicos">
+                        <a class="dropdown-item" href="gerenciar_servicos.html">
+                            <i class="bi bi-scissors"></i>
+                            Gerenciar Serviços
+                        </a>
+                    </li>
+
+                    <li id="menu-item-logs">
+                        <a class="dropdown-item" href="../HTML/logs_sistema.html">
+                            <i class="bi bi-shield-lock"></i>
+                            Ver Logs do Sistema
+                        </a>
+                    </li>
+
+                    <li id="menu-item-equipe">
+                        <a class="dropdown-item" href="equipe.html">
+                            <i class="bi bi-people"></i>
+                            Gerenciar Equipe
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item text-danger"
+                           href="#"
+                           onclick="logout()">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Sair do Painel
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- CONTEÚDO -->
+    <div class="container mt-4">
+
+        <!-- ========================================== -->
+        <!-- DESEMPENHO FINANCEIRO -->
+        <!-- ========================================== -->
+
+        <div class="card-dashboard">
+
+            <h5>Desempenho Financeiro</h5>
+
+            <!-- FILTROS DO DESEMPENHO -->
+            <div class="filter-section">
+
+                <h6 class="mb-3">
+                    Filtros do Desempenho Financeiro
+                </h6>
+
+                <div class="row g-3">
+
+                    <div class="col-6 col-md-3">
+                        <label class="form-label">
+                            Data Início
+                        </label>
+
+                        <input type="date"
+                               id="dataInicioDesempenho"
+                               class="form-control form-control-sm">
+                    </div>
+
+                    <div class="col-6 col-md-3">
+                        <label class="form-label">
+                            Data Fim
+                        </label>
+
+                        <input type="date"
+                               id="dataFimDesempenho"
+                               class="form-control form-control-sm">
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <label class="form-label">
+                            Barbeiro
+                        </label>
+
+                        <select id="filtroBarbeiroDesempenho"
+                                class="form-select form-select-sm">
+
+                            <option value="todos">
+                                Todos os Barbeiros
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3 d-flex align-items-end gap-2">
+
+                        <button type="button"
+                                onclick="aplicarFiltroDesempenhoAdmin()"
+                                class="btn btn-warning btn-sm w-100"
+                                style="background-color:#f17a12;color:white;">
+                            Filtrar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-sm w-100"
+                            onclick="exportarDesempenhoExcel()"
+                            style="background-color: #198754; color: white;">
+                            💾
+                        </button>
+
+                        <button type="button"
+                                onclick="limparFiltroDesempenhoAdmin()"
+                                class="btn btn-secondary btn-sm w-100">
+                            Limpar
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- CARDS -->
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="card-dashboard text-center">
+
+                        <small>
+                            Cortes Concluídos
+                        </small>
+
+                        <div class="stat-number"
+                             id="resumoCortes">
+                            0
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-sm-4">
+                    <div class="card-dashboard text-center">
+
+                        <small>
+                            Faturamento Total
+                        </small>
+
+                        <div class="stat-number"
+                             id="resumoFaturamento">
+                            R$ 0,00
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-sm-4">
+                    <div class="card-dashboard text-center">
+
+                        <small>
+                            Barbeiro em Destaque
+                        </small>
+
+                        <div class="stat-number"
+                             id="resumoBarbeiro"
+                             style="font-size:1.2rem;">
+                            -
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- GRÁFICO -->
+            <div id="containerGrafico">
+                <canvas id="graficoFaturamento"></canvas>
+            </div>
+
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- ATENDIMENTOS RECENTES -->
+        <!-- ========================================== -->
+
+        <div class="card-dashboard">
+
+            <h5>
+                Atendimentos Recentes
+            </h5>
+
+
+            <!-- FILTROS DOS ATENDIMENTOS -->
+            <div class="filter-section">
+
+                <h6 class="mb-3">
+                    Filtros de Atendimento
+                </h6>
+
+                <div class="row g-3">
+
+                    <!-- DATA INÍCIO -->
+                    <div class="col-6 col-md-2">
+
+                        <label class="form-label">
+                            Data Início
+                        </label>
+
+                        <input type="date"
+                               id="dataInicio"
+                               class="form-control form-control-sm">
+
+                    </div>
+
+
+                    <!-- DATA FIM -->
+                    <div class="col-6 col-md-2">
+
+                        <label class="form-label">
+                            Data Fim
+                        </label>
+
+                        <input type="date"
+                               id="dataFim"
+                               class="form-control form-control-sm">
+
+                    </div>
+
+
+                    <!-- BARBEIRO -->
+                    <div class="col-12 col-md-2">
+
+                        <label class="form-label">
+                            Barbeiro
+                        </label>
+
+                        <select id="filtroBarbeiro"
+                                class="form-select form-select-sm">
+
+                            <option value="todos">
+                                Todos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SERVIÇO -->
+                    <div class="col-12 col-md-2">
+
+                        <label class="form-label">
+                            Serviço
+                        </label>
+
+                        <select id="filtroServico"
+                                class="form-select form-select-sm">
+
+                            <option value="todos">
+                                Todos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+                    <div class="col-12 col-md-2">
+
+                        <label class="form-label">
+                            Status
+                        </label>
+
+                        <select id="filtroStatus"
+                                class="form-select form-select-sm">
+
+                            <option value="todos">
+                                Todos
+                            </option>
+
+                            <option value="Pendente">
+                                Pendente
+                            </option>
+
+                            <option value="Concluído">
+                                Concluído
+                            </option>
+
+                            <option value="Faltou">
+                                Faltou
+                            </option>
+
+                            <option value="Cancelado">
+                                Cancelado
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- BOTÕES -->
+                    <div class="col-12 col-md-2 d-flex align-items-end gap-2">
+
+                        <button type="button"
+                                onclick="aplicarFiltrosAtendimentosAdmin()"
+                                class="btn btn-warning btn-sm w-100"
+                                style="background-color:#f17a12;color:white;">
+                            Filtrar
+                        </button>
+
+                        <button type="button"
+                                onclick="limparFiltrosAtendimentosAdmin()"
+                                class="btn btn-secondary btn-sm w-100">
+                            Limpar
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- TABELA -->
+            <div class="table-responsive">
+
+                <table class="table table-dark table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Barbeiro</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th class="text-center">
+                                Ações
+                            </th>
+                            <th class="text-center">
+                                Excluir
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabelaAgendamentos"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BIBLIOTECAS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JAVASCRIPT ADMIN -->
+    <script src="../JS/admin.js"></script>
+
+
+    <!-- CONTROLE DE ACESSO -->
+    <script>
+
+        const usuario = JSON.parse(
+            localStorage.getItem('user')
+        );
+
+        const cargo = localStorage.getItem('cargo');
+
+
+        if (!usuario || !cargo) {
+            window.location.href =
+                '../HTML/login.html';
+        }
+
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            () => {
+
+                const itemLogs =
+                    document.getElementById(
+                        'menu-item-logs'
+                    );
+
+                const secaoLogs =
+                    document.getElementById(
+                        'secao-logs'
+                    );
+
+                const itemBloqueio =
+                    document.getElementById(
+                        'menu-item-bloqueio'
+                    );
+
+
+                const menuAdmin =
+                    document.getElementById(
+                        'menuAdmin'
+                    );
+
+                menuAdmin.innerHTML =
+                    `<i class="bi bi-person-circle"></i> ${usuario.nome} (${cargo})`;
+
+
+                if (cargo !== 'Admin') {
+
+                    if (itemLogs) {
+                        itemLogs.remove();
+                    }
+
+                    if (secaoLogs) {
+                        secaoLogs.remove();
+                    }
+
+                    if (itemBloqueio) {
+                        itemBloqueio.remove();
+                    }
+
+                    console.log(
+                        "Modo Barbeiro: Funcionalidades administrativas ocultas."
+                    );
+                }
+
+            }
+        );
+
+
+        function logout() {
+
+            localStorage.clear();
+
+            window.location.href =
+                '../HTML/login.html';
+        }
+
+    </script>
+
+</body>
+</html>

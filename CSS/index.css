@@ -1,0 +1,106 @@
+span {
+    font-size: 18px;
+    color: #fd6506;
+}
+
+span:hover{
+    color:white;
+}
+
+.card {
+    margin: 15px; /* Espaçamento entre os cards */
+}
+
+.card:hover{
+    border: 5px solid black
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fd6506;
+    font-size: 40px;
+}
+
+.card-body{
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #fd6506 !important;
+    border: none !important;
+    padding: 10px 30px !important;
+    font-size: 18px !important;
+
+}
+
+.btn-primary:hover{
+    background-color: black !important;
+}
+
+body{
+    background-color: #3b3a3d !important;
+}
+
+footer{
+    background-color: black !important;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+}
+
+/* Faz a lista de links ocupar todo o espaço lateral */
+.navbar-nav {
+    width: 100%;
+    display: flex;
+    align-items: center; /* Alinha o botão verticalmente com o texto */
+}
+
+/* Agora o margin-left: auto vai funcionar de verdade */
+.navbar-collapse .btnLogin-popup {
+    margin-left: auto !important; 
+    width: 130px;
+    height: 50px;  
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fd6506;
+    font-weight: 500;
+    transition: .5s;
+}
+
+.navbar-collapse .btnLogin-popup:hover{
+    background: #ffffff;
+    color: #162938;
+}
+
+/* Configuração para o menu no CELULAR (Telas menores que 992px) */
+@media (max-width: 991px) {
+    .navbar-nav {
+        text-align: center;   /* Centraliza o texto dos links (span) */
+        align-items: center;  /* Centraliza o botão e os itens no eixo horizontal */
+        padding-bottom: 20px; /* Dá um respiro no final do menu */
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;          /* Garante que o item ocupe a largura toda para centralizar */
+        margin: 10px 0;       /* Espaçamento entre os links no celular */
+    }
+
+    .navbar-collapse .btnLogin-popup {
+        margin-left: 0 !important; /* Remove o empurrão para a direita no celular */
+        margin-top: 10px;          /* Espaço entre o último link e o botão */
+    }
+}
+
+.nav-link{
+    color: #fd6506 !important;
+}
+
+.nav-link:hover{
+    color: #fff !important;
+}
+

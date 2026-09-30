@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato | MB Barber Shop</title>
+  <link rel="stylesheet" href="../CSS/contatos.css">
+  <link rel="stylesheet" href="../CSS/auth.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+        span {
+          font-size: 18px;
+          color: #fd6506;
+        }
+        span:hover {
+          color: white;
+        }
+        .price:hover {
+          color: #fd6506;
+        }
+        .navbar {
+            min-height: 110px;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background-color: #3b3a3d;
+                padding-bottom: 20px;
+                text-align: center;
+            }
+
+            /* Estilo para o container ficar embaixo de tudo no mobile */
+            #auth-container {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                padding: 20px 0;
+                border-top: 1px solid rgba(255,255,255,0.1); /* Linha divisória após Contatos */
+                margin-top: 10px;
+            }
+            
+            /* Garante que o dropdown não quebre o layout centralizado */
+            #auth-container .dropdown-menu {
+                position: static !important;
+                float: none;
+                width: 100%;
+                background: transparent;
+                border: none;
+                text-align: center;
+            }
+        }
+  </style>
+</head>
+<body>
+
+<nav style="background-color: #3b3a3d;" class="navbar navbar-expand-lg navbar-dark">
+<div class="container-fluid">
+  
+  <a class="navbar-brand" href="index.html">
+    <img src="../IMAGEM/Logo MB Barber Shop.png" width="140" height="110" alt="Logo">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="atendimentos.html">Serviços</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="barbeiros.html">Barbeiros</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="contatos.html">Contatos</a>
+      </li>
+    </ul>
+
+    <div id="auth-container" class="ms-lg-auto">
+        <button class="btnLogin-popup" onclick="window.location.href='login.html'">Login</button>
+    </div>
+
+  </div>
+</div>
+</nav>
+
+  <br><br><br>
+
+  <section>
+    <h2>Contato</h2>
+    <form id="formulario">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" class="form" placeholder="Digite seu Nome...." autocomplete="off" required >
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" class="form" placeholder="Digite seu E-mail...." autocomplete="off" required>
+      <label class="msg" for="mensagem">Mensagem</label>
+      <textarea id="mensagem" name="mensagem" rows="4" cols="50" class="form" placeholder="Deixe seu Feedback...." autocomplete="off" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <br><br><br>
+
+  <footer>
+    <h3>&copy; Todos os direitos reservados</h3>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+  <script src="../JS/auth.js"></script>
+    
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    document.getElementById('formulario').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const dados = {
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            mensagem: document.getElementById('mensagem').value
+        };
+
+        try {
+            const response = await fetch('http://localhost:3000/enviar-contato', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await response.json();
+
+            if (response.ok && resultado.success) {
+                alert("Sua mensagem foi enviada! Obrigado pelo feedback.");
+                e.target.reset(); 
+            } else {
+                alert(resultado.message || "Houve um erro ao enviar. Tente novamente.");
+            }
+        } catch (error) {
+            console.error("Erro na conexão:", error);
+            alert("Não foi possível conectar ao servidor para enviar a mensagem.");
+        }
+    });
+  </script>
+</body>
+</html>

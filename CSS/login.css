@@ -1,0 +1,317 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Sugestão: adicione uma fonte legível */
+}
+
+body {
+    background-color: #3b3a3d !important;
+    min-height: 100vh;
+    margin: 0;
+    display: block; 
+}
+
+span {
+    font-size: 18px;
+    color: #fd6506;
+}
+
+span:hover{
+    color:white;
+}
+
+/* --- CARDS E SEÇÕES (Páginas Gerais) --- */
+.card {
+    margin: 15px; 
+}
+
+.card:hover{
+    border: 5px solid black;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fd6506;
+    font-size: 40px;
+}
+
+.card-body{
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #fd6506 !important;
+    border: none !important;
+    padding: 10px 30px !important;
+    font-size: 18px !important;
+}
+
+.btn-primary:hover{
+    background-color: black !important;
+}
+
+footer{
+    background-color: black;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+}
+
+/* --- NAVBAR --- */
+.navbar-nav {
+    width: 100%;
+    display: flex;
+    align-items: center; 
+}
+
+.navbar-collapse .btnLogin-popup {
+    margin-left: auto !important; 
+    width: 130px;
+    height: 50px;  
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fd6506;
+    font-weight: 500;
+    transition: .5s;
+}
+
+.navbar-collapse .btnLogin-popup:hover{
+    background: #fff;
+    color: #162938;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 991px) {
+    .navbar-nav {
+        text-align: center;
+        align-items: center;
+        padding-bottom: 20px;
+    }
+    .navbar-nav .nav-item {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .navbar-collapse .btnLogin-popup {
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}
+
+/* --- WRAPPER (CONTAINER PRINCIPAL) --- */
+.wrapper {
+    position: relative;
+    width: 550px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255,255,255,.5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px auto;
+    overflow: hidden;
+    transition: height .3s ease, transform .5s ease;
+}
+
+/* Ajustes de altura dinâmicos */
+.wrapper.active {
+    height: 720px; /* Registro é maior */
+}
+
+.wrapper.forgot-active {
+    height: 420px; /* Esqueci a senha é menor */
+}
+
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+    transition: transform .5s ease, opacity .5s ease;
+}
+
+/* --- LÓGICA DE TRANSIÇÃO (Onde estava o erro) --- */
+
+/* 1. LOGIN: Estado inicial visível */
+.wrapper .form-box.login {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Login some para a ESQUERDA quando Registro ativa */
+.wrapper.active .form-box.login {
+    transform: translateX(-600px);
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Login some para CIMA quando Esqueci a Senha ativa */
+.wrapper.forgot-active .form-box.login {
+    transform: translateY(-500px);
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 2. REGISTRO: Estado inicial escondido na DIREITA */
+.wrapper .form-box.register {
+    position: absolute;
+    transform: translateX(600px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Registro entra quando .active está presente */
+.wrapper.active .form-box.register {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+}
+
+/* 3. ESQUECI A SENHA: Estado inicial escondido EMBAIXO */
+.wrapper .form-box.forgot-password {
+    position: absolute;
+    transform: translateY(500px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Esqueci a senha entra quando .forgot-active está presente */
+.wrapper.forgot-active .form-box.forgot-password {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+}
+
+/* --- ELEMENTOS DOS FORMULÁRIOS --- */
+.form-box h2{
+    font-size: 2em;
+    color: #162938;
+    text-align: center;
+}
+
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
+}
+
+.input-box label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #162938;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+
+/* Efeito do label subindo */
+.input-box input:focus~label,
+.input-box input:valid~label{
+    top: -5px;
+}
+
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #162938;
+    font-weight: 600;
+    padding: 0 35px 0 5px; 
+}
+
+.input-box .icon{
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: #162938;
+    line-height: 57px;
+}
+
+.remember-forgot{
+    font-size: .9em;
+    color: #162938;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember-forgot label input{
+    accent-color: #162938;
+    margin-right: 3px;
+}
+
+.remember-forgot a, .login-register p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.remember-forgot a:hover, .login-register p a:hover {
+    text-decoration: underline;
+}
+
+.btn-login{
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}
+
+.login-register{
+    font-size: .9em;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+
+.nav-link{
+    color: #fd6506 !important;
+}
+
+.nav-link:hover{
+    color: #fff !important;
+}
+
+.password-requirements {
+    font-size: 0.65rem; /* Letra pequena para não ocupar muito espaço */
+    margin: -5px 0 15px 0;
+    text-align: left;
+    color: #ff0000; /* Cor padrão: vermelho */
+}
+
+.password-requirements p {
+    margin: 1px 0;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+/* Classe que o JS vai aplicar quando o requisito for cumprido */
+.password-requirements p.valid {
+    color: #2ecc71; /* Verde */
+}
