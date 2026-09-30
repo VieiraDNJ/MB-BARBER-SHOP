@@ -1,28 +1,162 @@
-MB BARBER SHOP
+# 💈 MB BARBER SHOP
 
-Descrição do projeto
+Sistema de gestão para barbearia desenvolvido como projeto acadêmico.
 
-Funcionalidades
+O MB Barber Shop foi desenvolvido com o objetivo de facilitar o gerenciamento
+de uma barbearia, permitindo o controle de clientes, barbeiros, serviços,
+agendamentos e informações administrativas.
+
+---
+
+## 📸 Demonstração
+
+### 🏠 Página Inicial
+
+![Página Inicial](IMAGEM/screenshots/tela-inicial.png)
+
+### ✂️ Serviços
+
+![Serviços](IMAGEM/screenshots/servicos.png)
+
+### 💈 Barbeiros
+
+![Barbeiros](IMAGEM/screenshots/barbeiros.png)
+
+### 📅 Agendamento
+
+![Agendamento](IMAGEM/screenshots/agendamento.png)
+
+### 🔐 Login
+
+![Login](IMAGEM/screenshots/login.png)
+
+### 📝 Cadastro
+
+![Cadastro](IMAGEM/screenshots/cadastro.png)
+
+### 🔑 Recuperação de Senha
+
+![Recuperação de Senha](IMAGEM/screenshots/recuperar-senha.png)
+
+### 📋 Meus Agendamentos
+
+![Meus Agendamentos](IMAGEM/screenshots/meus-agendamentos.png)
+
+### 📊 Dashboard Administrativo
+
+![Dashboard Administrativo](IMAGEM/screenshots/dashboard-admin.png)
+
+---
+
+## 🚀 Funcionalidades
+
+### 👤 Clientes
+
 - Cadastro de clientes
 - Login
-- Agendamento
-- Gerenciamento de barbeiros
-- Gerenciamento de serviços
-- Dashboard
+- Validação de dados
 - Recuperação de senha
-- Sistema de bloqueio de horários
-- Logs administrativos
+- Visualização dos próprios agendamentos
+- Cancelamento de agendamentos
 
-Tecnologias
-- HTML
-- CSS
+### 📅 Agendamentos
+
+- Escolha da data
+- Escolha do serviço
+- Escolha do barbeiro
+- Escolha do horário
+- Consulta de horários disponíveis
+- Controle do status do agendamento
+
+### 💈 Barbeiros
+
+- Cadastro de barbeiros
+- Gerenciamento da equipe
+- Controle de status dos profissionais
+- Visualização dos barbeiros disponíveis
+
+### ✂️ Serviços
+
+- Cadastro de serviços
+- Visualização dos serviços disponíveis
+- Alteração de valores
+- Gerenciamento dos serviços
+
+### 📊 Administração
+
+- Dashboard administrativo
+- Visualização de atendimentos
+- Controle financeiro
+- Gerenciamento de barbeiros
+- Bloqueio de horários
+- Registro de atividades do sistema
+- Controle de status dos agendamentos
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+### Front-end
+
+- HTML5
+- CSS3
 - JavaScript
-- Node.js
-- Express
-- MySQL
-- Nodemailer
 
-Como executar
-1. npm install
-2. configurar o .env
-3. iniciar o servidor
+### Back-end
+
+- Node.js
+- Express.js
+
+### Banco de dados
+
+- MySQL
+
+### Outras tecnologias
+
+- Nodemailer
+- dotenv
+- CORS
+- Body Parser
+
+---
+
+## 📁 Estrutura do projeto
+
+```text
+MB-BARBER-SHOP/
+│
+├── CSS/
+│   ├── agendamentos.css
+│   ├── auth.css
+│   ├── contatos.css
+│   ├── gerenciar_servicos.css
+│   ├── index.css
+│   └── ...
+│
+├── HTML/
+│   ├── index.html
+│   ├── login.html
+│   ├── agendamento.html
+│   ├── barbeiros.html
+│   ├── contatos.html
+│   ├── admin.html
+│   └── ...
+│
+├── IMAGEM/
+│   ├── Banner.png
+│   ├── Logo MB Barber Shop.png
+│   └── screenshots/
+│
+├── JS/
+│   ├── auth.js
+│   ├── login.js
+│   ├── agendamento.js
+│   ├── admin.js
+│   ├── dashboard_barbeiro.js
+│   ├── db.js
+│   ├── serve.js
+│   └── ...
+│
+├── .gitignore
+├── package.json
+└── package-lock.json
