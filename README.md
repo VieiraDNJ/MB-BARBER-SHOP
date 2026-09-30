@@ -12,39 +12,39 @@ agendamentos e informações administrativas.
 
 ### 🏠 Página Inicial
 
-![Página Inicial](IMAGEM/screenshots/tela-inicial.png)
+![Página Inicial](IMAGEM/tela-inicial.png)
 
 ### ✂️ Serviços
 
-![Serviços](IMAGEM/screenshots/servicos.png)
+![Serviços](IMAGEM/servicos.png)
 
 ### 💈 Barbeiros
 
-![Barbeiros](IMAGEM/screenshots/barbeiros.png)
+![Barbeiros](IMAGEM/barbeiros.png)
 
 ### 📅 Agendamento
 
-![Agendamento](IMAGEM/screenshots/agendamento.png)
+![Agendamento](IMAGEM/agendamento.png)
 
 ### 🔐 Login
 
-![Login](IMAGEM/screenshots/login.png)
+![Login](IMAGEM/login.png)
 
 ### 📝 Cadastro
 
-![Cadastro](IMAGEM/screenshots/cadastro.png)
+![Cadastro](IMAGEM/cadastro.png)
 
 ### 🔑 Recuperação de Senha
 
-![Recuperação de Senha](IMAGEM/screenshots/recuperar-senha.png)
+![Recuperação de Senha](IMAGEM/recuperar-senha.png)
 
 ### 📋 Meus Agendamentos
 
-![Meus Agendamentos](IMAGEM/screenshots/meus-agendamentos.png)
+![Meus Agendamentos](IMAGEM/meus-agendamentos.png)
 
 ### 📊 Dashboard Administrativo
 
-![Dashboard Administrativo](IMAGEM/screenshots/dashboard-admin.png)
+![Dashboard Administrativo](IMAGEM/dashboard-admin.png)
 
 ---
 
