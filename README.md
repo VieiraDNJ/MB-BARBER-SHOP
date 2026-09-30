@@ -6,6 +6,10 @@ O MB Barber Shop foi desenvolvido com o objetivo de facilitar o gerenciamento
 de uma barbearia, permitindo o controle de clientes, barbeiros, serviços,
 agendamentos e informações administrativas.
 
+> 📌 Este repositório apresenta a versão pública do projeto para fins de
+> portfólio e demonstração. A implementação completa do back-end e do banco
+> de dados não está disponibilizada publicamente.
+
 ---
 
 ## 📸 Demonstração
@@ -120,3 +124,16 @@ agendamentos e informações administrativas.
 
 ---
 
+## 📁 Estrutura do projeto
+
+```text
+MB-BARBER-SHOP/
+│
+├── CSS/
+├── HTML/
+├── IMAGEM/
+├── JS/
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
